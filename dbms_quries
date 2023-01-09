@@ -1,0 +1,20 @@
+db.transaction(function (tx) {
+    tx.executeSql(
+      "SELECT * FROM RegistgeredUsers WHERE id = ? AND pwd = ?",
+      [email, password],
+      function (tx, result) {
+        if (result.rows.length > 0) {
+          tx.executeSql(
+            "CREATE TABLE IF NOT EXISTS LoggedInUser (id unique, pwd)"
+          );
+          tx.executeSql("INSERT INTO LoggedInUser (id, pwd) VALUES (?, ?)", [
+            email,
+            password,
+          ]);
+          window.location = "courier.html";
+        } else {
+          alert("Please Check your Email and Password");
+        }
+      }
+    );
+  });
