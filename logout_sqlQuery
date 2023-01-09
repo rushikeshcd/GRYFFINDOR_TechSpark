@@ -1,0 +1,6 @@
+function logout() {
+  db.transaction(function (tx) {
+    tx.executeSql("DELETE FROM LoggedInUser WHERE id = ?", [currentUser]);
+    alert("Logged Out Successfully");
+  });
+}
